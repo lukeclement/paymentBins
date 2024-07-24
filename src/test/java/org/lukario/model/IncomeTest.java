@@ -61,11 +61,13 @@ public class IncomeTest {
     }
 
     @Test
-    void givenASeriesOfBandsTaxFactoryCanGenerateTaxFlows() {
+    void givenADefaultTaxCalculatorIExpectCertainTaxBands() {
         DefaultTaxCalculator defaultTaxCalculator = TaxFactory.createDefaultTaxCalculator();
         List<TaxBand> defaultIncomeTaxBands = defaultTaxCalculator.getIncomeTaxBands();
+        List<TaxBand> defaultNationalInsuranceBands = defaultTaxCalculator.getNationalInsuranceBands();
 
-        assertThat(defaultIncomeTaxBands.size()).isGreaterThan(0);
+        assertThat(defaultIncomeTaxBands.size()).isEqualTo(4);
+        assertThat(defaultNationalInsuranceBands.size()).isEqualTo(2);
     }
 
     static Stream<Arguments> incomeTestProvider() {

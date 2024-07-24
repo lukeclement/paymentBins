@@ -30,6 +30,10 @@ public class DefaultTaxCalculator implements TaxCalculator {
     }
 
     public List<TaxBand> getIncomeTaxBands() {
-        throw new UnsupportedOperationException();
+        return List.copyOf(incomeTaxBands);
+    }
+
+    public List<TaxBand> getNationalInsuranceBands() {
+        return List.copyOf(nationalInsuranceBands);
     }
 }
