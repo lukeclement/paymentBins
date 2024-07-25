@@ -12,9 +12,9 @@ public class TaxFactory {
     public static DefaultTaxCalculator createDefaultTaxCalculator() {
         List<TaxBand> incomeTaxBands = List.of(
                 new TaxBand("Personal allowance", 0., 12_570., 0., YEARLY),
-                new TaxBand("Basic rate", 12_571., 50_270., 0.2, YEARLY),
-                new TaxBand("Higher rate", 50_271., 125_140., 0.4, YEARLY),
-                TaxBand.upperBand("Additional rate", 125_141., 0.45, YEARLY)
+                new TaxBand("Basic rate", 12_570., 50_270., 0.2, YEARLY),
+                new TaxBand("Higher rate", 50_270., 125_140., 0.4, YEARLY),
+                TaxBand.upperBand("Additional rate", 125_140., 0.45, YEARLY)
         );
 
         List<TaxBand> nationalInsuranceBands = List.of(

@@ -21,12 +21,17 @@ public class DefaultTaxCalculator implements TaxCalculator {
         return Income.sum(nationalInsurance, incomeTax);
     }
 
+    @Override
+    public Income getTax(Income income, List<TaxBand> taxBands) {
+        return Income.sum(taxBands.stream().map(taxBand -> taxBand.getTaxAmount(income)));
+    }
+
     public Income getIncomeTax(Income income) {
-        throw new UnsupportedOperationException();
+        return getTax(income, incomeTaxBands);
     }
 
     public Income getNationalInsurance(Income income) {
-        throw new UnsupportedOperationException();
+        return getTax(income, nationalInsuranceBands);
     }
 
     public List<TaxBand> getIncomeTaxBands() {

@@ -1,9 +1,10 @@
 package org.lukario.model;
 
 import java.util.Arrays;
+import java.util.stream.Stream;
 
-public record Income (Double annualAmount) {
-    private static Income identity() {
+public record Income(Double annualAmount) {
+    public static Income zero() {
         return new Income(0.);
     }
 
@@ -12,7 +13,14 @@ public record Income (Double annualAmount) {
     }
 
     public static Income sum(Income... incomes) {
-        return Arrays.stream(incomes)
-                .reduce(identity(), (a, b) -> new Income(a.annualAmount + b.annualAmount));
+        return sum(Arrays.stream(incomes));
+    }
+
+    public static Income sum(Stream<Income> incomeStream) {
+        return incomeStream.reduce(zero(), (a, b) -> new Income(a.annualAmount + b.annualAmount));
+    }
+
+    public Income negative() {
+        return new Income(-annualAmount);
     }
 }

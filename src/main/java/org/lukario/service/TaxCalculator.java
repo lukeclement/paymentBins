@@ -8,6 +8,7 @@ import java.util.List;
 
 @Service
 public interface TaxCalculator {
-
+    //TODO: docs
     Income getTax(Income income);
+    Income getTax(Income income, List<TaxBand> taxBands);
 }

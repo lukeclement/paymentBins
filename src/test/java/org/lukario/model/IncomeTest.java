@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.in;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
 import static org.junit.jupiter.params.provider.Arguments.arguments;
@@ -72,24 +73,29 @@ public class IncomeTest {
 
     static Stream<Arguments> incomeTestProvider() {
         return Stream.of(
-                arguments(0.0, 0.0),
-                arguments(12570, 0.0),
-                arguments(12571.0, 0.0),
-                arguments(12670.0, 18.20),
-                arguments(80000, 19428.4),
-                arguments(50270.0, 7538.2)
+                arguments(0., 0.),
+                arguments(12_570., 0.),
+                arguments(12_571., 0.2),
+                arguments(12_670., 20.),
+                arguments(80_000., 19_432.),
+                arguments(50_270., 7_540.)
         );
     }
 
     @ParameterizedTest
     @MethodSource("incomeTestProvider")
-    void givenIncomeICanFindIncomeTaxPaid(Double incomePerAnnum, Double expectedIncomeTax) {
+    void givenIncomeICanFindIncomeTaxPaid(Double incomePerYear, Double expectedIncomeTax) {
         //Given a tax calculator
-        TaxCalculator taxCalculator = TaxFactory.createDefaultTaxCalculator();
+        DefaultTaxCalculator taxCalculator = TaxFactory.createDefaultTaxCalculator();
         //Given a yearly income
-        Income income = YEARLY.income(incomePerAnnum);
+        Income income = YEARLY.income(incomePerYear);
 
-//        Income incomeTax = taxCalculator.getIncomeTax(income);
-//        assertEquals(YEARLY.income(expectedIncomeTax), incomeTax);
+        Income incomeTax = taxCalculator.getIncomeTax(income);
+        assertEquals(YEARLY.income(expectedIncomeTax), incomeTax);
+    }
+
+    @Test
+    void givenASeriesOfOperationsICanTrackHowIncomeHasChanged() {
+        Income income = WEEKLY.income(20.);
     }
 }
