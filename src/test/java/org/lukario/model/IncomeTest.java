@@ -1,5 +1,6 @@
 package org.lukario.model;
 
+import jdk.jfr.Category;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -47,7 +48,8 @@ public class IncomeTest {
                 arguments(new Income[]{five}, five),
                 arguments(new Income[]{WEEKLY.income(1.), ten}, YEARLY.income(62.)),
                 arguments(new Income[]{five, ten, five}, YEARLY.income(20.)),
-                arguments(new Income[]{five, YEARLY.income(-5.)}, YEARLY.income(0.))
+                arguments(new Income[]{five, YEARLY.income(-5.)}, YEARLY.income(0.)),
+                arguments(new Income[]{five, YEARLY.income(5.).negative()}, YEARLY.income(0.))
         );
     }
 
@@ -75,6 +77,7 @@ public class IncomeTest {
                 arguments(12_571., 0.2),
                 arguments(12_670., 20.),
                 arguments(80_000., 19_432.),
+                arguments(200_000., 71_175.),
                 arguments(50_270., 7_540.)
         );
     }
