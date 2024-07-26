@@ -1,7 +1,6 @@
 package org.lukario.service;
 
 import org.lukario.model.TaxBand;
-import org.lukario.model.TimeWindow;
 
 import java.util.List;
 

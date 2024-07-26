@@ -5,16 +5,13 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.lukario.service.DefaultTaxCalculator;
-import org.lukario.service.TaxCalculator;
 import org.lukario.service.TaxFactory;
 
 import java.util.List;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.in;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.fail;
 import static org.junit.jupiter.params.provider.Arguments.arguments;
 import static org.lukario.model.TimeWindow.*;
 
@@ -84,7 +81,7 @@ public class IncomeTest {
 
     @ParameterizedTest
     @MethodSource("incomeTestProvider")
-    void givenIncomeICanFindIncomeTaxPaid(Double incomePerYear, Double expectedIncomeTax) {
+    void givenIncomeICanFindIncomeTaxPaid(Double incomePerYear, Double expectedIncomeTax) { //TODO: test NI
         //Given a tax calculator
         DefaultTaxCalculator taxCalculator = TaxFactory.createDefaultTaxCalculator();
         //Given a yearly income
@@ -92,10 +89,5 @@ public class IncomeTest {
 
         Income incomeTax = taxCalculator.getIncomeTax(income);
         assertEquals(YEARLY.income(expectedIncomeTax), incomeTax);
-    }
-
-    @Test
-    void givenASeriesOfOperationsICanTrackHowIncomeHasChanged() {
-        Income income = WEEKLY.income(20.);
     }
 }
