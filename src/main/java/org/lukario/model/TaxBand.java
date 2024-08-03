@@ -12,9 +12,9 @@ public record TaxBand(String name, Double minimum, Double maximum, Double rate, 
 
     private double getIncomeWithinBand(Double amount) {
         double incomeWithinBand;
-        if (amount < minimum) {
+        if (amount <= minimum) {
             incomeWithinBand = 0;
-        } else if (amount > maximum) {
+        } else if (amount >= maximum) {
             incomeWithinBand = maximum - minimum;
         } else {
             incomeWithinBand = amount - minimum;

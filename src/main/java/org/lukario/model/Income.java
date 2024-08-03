@@ -22,5 +22,5 @@ public record Income(Double annualAmount) {
 
     public Income negative() {
         return new Income(-annualAmount);
-    }
+    } //TODO: test
 }
