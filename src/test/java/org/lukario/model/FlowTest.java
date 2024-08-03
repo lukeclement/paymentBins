@@ -16,4 +16,29 @@ public class FlowTest {
         //Then I expect a remaining income of zero
         assertEquals(remainingIncome, Income.zero());
     }
+
+    @Test
+    void givenASetOfParametersIGetValidBuckets() {
+        //Given a set of 4 variables
+        TimeWindow paymentRate = TimeWindow.WEEKLY;
+        TimeWindow resetRate = TimeWindow.YEARLY;
+        Double target = 520.;
+        Double payments = 10.;
+        //When I create a bucket with any 3 of those variables
+        Bucket bucket = Bucket.createBucket(paymentRate, target, resetRate);
+        //Then I get a valid bucket created
+        assertValidBucket(bucket, paymentRate, resetRate, target, payments);
+    }
+
+    void assertValidBucket(
+            Bucket actual,
+            TimeWindow expectedPaymentRate,
+            TimeWindow expectedResetRate,
+            Double expectedTarget,
+            Double expectedPayments) {
+        assertEquals(actual.getPaymentRate(), expectedPaymentRate);
+        assertEquals(actual.getTarget(), expectedTarget);
+        assertEquals(actual.getResetRate(), expectedResetRate);
+        assertEquals(actual.getPayment().amount(expectedPaymentRate), expectedPayments);
+    }
 }

@@ -1,5 +1,8 @@
 package org.lukario.model;
 
+import lombok.Getter;
+
+@Getter
 public class Bucket {
     private final Income payment;
     private final TimeWindow paymentRate;
