@@ -5,9 +5,9 @@ public record TaxBand(String name, Double minimum, Double maximum, Double rate, 
         return new TaxBand(name, minimum, Double.POSITIVE_INFINITY, rate, taxWindow);
     }
 
-    public Income getTaxAmount(Income income) {
-        Double amount = income.amount(taxWindow);
-        return taxWindow.income(getIncomeWithinBand(amount) * rate);
+    public Flow getTaxAmount(Flow flow) {
+        Double amount = flow.amount(taxWindow);
+        return taxWindow.flow(getIncomeWithinBand(amount) * rate);
     }
 
     private double getIncomeWithinBand(Double amount) {

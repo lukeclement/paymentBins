@@ -14,7 +14,7 @@ public enum TimeWindow {
         this.ratio = ratio;
     }
 
-    public Income income(Double amount) {
-        return new Income(amount * ratio);
+    public Flow flow(Double amount) {
+        return new Flow(amount * ratio);
     }
 }

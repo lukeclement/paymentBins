@@ -4,20 +4,20 @@ import lombok.ToString;
 
 @ToString
 public class IncomeHandler {
-    private final Income income;
+    private final Flow flow;
 
-    public IncomeHandler(Income baseIncome) {
-        this.income = baseIncome;
+    public IncomeHandler(Flow baseFlow) {
+        this.flow = baseFlow;
     }
 
-    public Income getTotalIncome(TimeWindow window) {
+    public Flow getTotalIncome(TimeWindow window) {
 //        Double sourceIncomeRatio = Double.valueOf(income.timeWindow().getRatio());
 //        Double targetIncomeRatio = Double.valueOf(window.getRatio());
 //        return new Income(income.amount() * sourceIncomeRatio /  targetIncomeRatio, window);
         throw new UnsupportedOperationException();
     }
 
-    public Income getTaxedIncome(TimeWindow timeWindow) {
+    public Flow getTaxedIncome(TimeWindow timeWindow) {
         return null;
     }
 }

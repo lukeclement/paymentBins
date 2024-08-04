@@ -4,13 +4,13 @@ import lombok.Getter;
 
 @Getter
 public class Bucket {
-    private final Income payment;
+    private final Flow payment;
     private final TimeWindow paymentRate;
     private final Double target;
     private final TimeWindow resetRate;
     private final Double amountInBucket;
 
-    private Bucket(Income payment, TimeWindow paymentRate, Double target, TimeWindow resetRate, Double amountInBucket) {
+    private Bucket(Flow payment, TimeWindow paymentRate, Double target, TimeWindow resetRate, Double amountInBucket) {
         this.payment = payment;
         this.paymentRate = paymentRate;
         this.target = target;
@@ -19,9 +19,9 @@ public class Bucket {
     }
 
     public static Bucket createBucket(TimeWindow paymentRate, Double target, TimeWindow resetRate) {
-        Income goal = resetRate.income(target);
+        Flow goal = resetRate.flow(target);
         Double paymentAmount = goal.amount(paymentRate);
-        Income payment = paymentRate.income(paymentAmount);
+        Flow payment = paymentRate.flow(paymentAmount);
         return new Bucket(payment, paymentRate, target, resetRate, 0.);
     }
 
@@ -29,7 +29,7 @@ public class Bucket {
         return new Bucket(payment, paymentRate, target, resetRate, amountInBucket + payment.amount(paymentRate));
     }
 
-    public Income getRemainingIncome(Income input) {
-        return Income.sum(input, payment.negative());
+    public Flow getRemainingIncome(Flow input) {
+        return Flow.sum(input, payment.negative());
     }
 }
