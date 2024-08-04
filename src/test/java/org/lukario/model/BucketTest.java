@@ -18,7 +18,7 @@ public class BucketTest {
     }
 
     @Test
-    void givenASetOfParametersIGetValidBuckets() {
+    void givenASetOfParametersIGetValidBuckets() throws TimeWindowException {
         //Given a set of 4 variables
         TimeWindow paymentRate = TimeWindow.WEEKLY;
         TimeWindow resetRate = TimeWindow.YEARLY;

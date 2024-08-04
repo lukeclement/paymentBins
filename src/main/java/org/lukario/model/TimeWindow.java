@@ -7,13 +7,13 @@ import java.util.Optional;
 
 @Getter
 public enum TimeWindow {
-    YEARLY(1),
-    MONTHLY(12),
-    WEEKLY(52);
+    YEARLY(1.),
+    MONTHLY(12.),
+    WEEKLY(52.);
 
-    private final Integer ratio;
+    private final Double ratio;
 
-    TimeWindow(Integer ratio) {
+    TimeWindow(Double ratio) {
         this.ratio = ratio;
     }
 
@@ -21,16 +21,10 @@ public enum TimeWindow {
         return new Flow(amount * ratio);
     }
 
-    public static TimeWindow findWindow(Double ratio) {
-        //TODO: test! Make a better exception too
-        int ratioAsInt = ratio.intValue();
-        if (!Double.valueOf(ratioAsInt).equals(ratio)) {
-            throw new UnsupportedOperationException(); //TODO better exception
-        }
-        Integer targetRatio = ratioAsInt;
+    public static TimeWindow valueOf(Double ratio) throws TimeWindowException {
         Optional<TimeWindow> foundWindow = Arrays.stream(TimeWindow.values())
-                .filter(timeWindow -> timeWindow.getRatio().equals(targetRatio))
+                .filter(timeWindow -> timeWindow.getRatio().equals(ratio))
                 .findFirst();
-        return foundWindow.orElseThrow(UnsupportedOperationException::new); //TODO better exception
+        return foundWindow.orElseThrow(() -> new TimeWindowException("No window exists for ratio " + ratio));
     }
 }

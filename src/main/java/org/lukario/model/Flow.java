@@ -12,8 +12,8 @@ public record Flow(Double annualAmount) {
         return annualAmount / timeWindow.getRatio();
     }
 
-    public TimeWindow window(Double amount) {
-        return TimeWindow.findWindow(annualAmount / amount);
+    public TimeWindow window(Double amount) throws TimeWindowException {
+        return TimeWindow.valueOf(annualAmount / amount);
     }
 
     public static Flow sum(Flow... flows) {

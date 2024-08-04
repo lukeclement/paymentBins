@@ -31,13 +31,13 @@ public class Bucket {
         return new Bucket(name, payment, paymentRate, target, resetRate);
     }
 
-    public static Bucket createBucketFromPaymentWindow(String name, TimeWindow paymentRate, Double target, Double payments) {
+    public static Bucket createBucketFromPaymentWindow(String name, TimeWindow paymentRate, Double target, Double payments) throws TimeWindowException {
         Flow payment = paymentRate.flow(payments);
         TimeWindow resetRate = payment.window(target);
         return new Bucket(name, payment, paymentRate, target, resetRate);
     }
 
-    public static Bucket createBucketFromResetWindow(String name, TimeWindow resetRate, Double target, Double payments) {
+    public static Bucket createBucketFromResetWindow(String name, TimeWindow resetRate, Double target, Double payments) throws TimeWindowException {
         Flow goal = resetRate.flow(target);
         TimeWindow paymentRate = goal.window(payments);
         return new Bucket(name, paymentRate.flow(payments), paymentRate, target, resetRate);
