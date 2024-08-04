@@ -12,6 +12,10 @@ public record Flow(Double annualAmount) {
         return annualAmount / timeWindow.getRatio();
     }
 
+    public TimeWindow window(Double amount) {
+        return TimeWindow.findWindow(annualAmount / amount);
+    }
+
     public static Flow sum(Flow... flows) {
         return sum(Arrays.stream(flows));
     }

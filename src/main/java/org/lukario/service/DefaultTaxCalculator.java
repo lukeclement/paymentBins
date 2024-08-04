@@ -5,6 +5,7 @@ import org.lukario.model.TaxBand;
 
 import java.util.List;
 
+//TODO test
 public class DefaultTaxCalculator implements TaxCalculator {
     private final List<TaxBand> incomeTaxBands;
     private final List<TaxBand> nationalInsuranceBands;

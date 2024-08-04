@@ -71,25 +71,34 @@ public class FlowTest {
 
     static Stream<Arguments> incomeTestProvider() {
         return Stream.of(
-                arguments(0., 0.),
-                arguments(12_570., 0.),
-                arguments(12_571., 0.2),
-                arguments(12_670., 20.),
-                arguments(80_000., 19_432.),
-                arguments(200_000., 71_175.),
-                arguments(50_270., 7_540.)
+                arguments(0., 0., 0.),
+                arguments(12_570., 0., 0.),
+                arguments(12_571., 0.2, 0.),
+                arguments(12_670., 20., 6.88),
+                arguments(80_000., 19_432., 3_610.32),
+                arguments(200_000., 71_175., 6_010.32),
+                arguments(50_270., 7_540., 3_014.88)
         );
     }
 
     @ParameterizedTest
     @MethodSource("incomeTestProvider")
-    void givenIncomeICanFindIncomeTaxPaid(Double incomePerYear, Double expectedIncomeTax) { //TODO: test NI
+    void givenIncomeICanFindIncomeTaxPaid(Double incomePerYear, Double expectedIncomeTax, Double expectedNationalInsurance) {
         //Given a tax calculator
         DefaultTaxCalculator taxCalculator = TaxFactory.createDefaultTaxCalculator();
         //Given a yearly income
         Flow flow = YEARLY.flow(incomePerYear);
+        //When I get my taxes
+        Flow incomeTax = taxCalculator.getIncomeTax(flow);
+        Flow nationalInsurance = taxCalculator.getNationalInsurance(flow);
+        Flow totalTax = taxCalculator.getTax(flow);
+        //Then I expect the correct amounts
+        assertFlowEquals(YEARLY.flow(expectedIncomeTax), incomeTax);
+        assertFlowEquals(YEARLY.flow(expectedNationalInsurance), nationalInsurance);
+        assertFlowEquals(YEARLY.flow(expectedNationalInsurance + expectedIncomeTax), totalTax);
+    }
 
-        Flow flowTax = taxCalculator.getIncomeTax(flow);
-        assertEquals(YEARLY.flow(expectedIncomeTax), flowTax);
+    public void assertFlowEquals(Flow a, Flow b) {
+        assertEquals(a.annualAmount(), b.annualAmount(), 0.001);
     }
 }
