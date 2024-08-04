@@ -3,7 +3,6 @@ package org.lukario.service;
 import org.junit.jupiter.api.Test;
 import org.lukario.model.TaxBand;
 
-import java.lang.reflect.Method;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;

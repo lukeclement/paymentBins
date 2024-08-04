@@ -26,5 +26,5 @@ public record Flow(Double annualAmount) {
 
     public Flow negative() {
         return new Flow(-annualAmount);
-    } //TODO: test
+    }
 }
