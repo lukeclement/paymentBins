@@ -1,0 +1,7 @@
+{
+  "name": "test bucket",
+  "amount": 10.0,
+  "paymentRate": "MONTHLY",
+  "resetRate": "YEARLY",
+  "target": 120.0
+}

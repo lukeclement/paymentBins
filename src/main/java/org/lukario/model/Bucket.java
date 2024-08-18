@@ -1,9 +1,10 @@
 package org.lukario.model;
 
 import lombok.Getter;
+import org.lukario.model.dto.BucketDto;
 
 @Getter
-public class Bucket {
+public class Bucket implements Model<BucketDto>{
     private final String name;
     private final Flow payment;
     private final TimeWindow paymentRate;
@@ -45,5 +46,16 @@ public class Bucket {
 
     public Flow getRemainingIncome(Flow input) {
         return Flow.sum(input, payment.negative());
+    }
+
+    @Override
+    public BucketDto toDto() {
+        return BucketDto.builder()
+                .name(name)
+                .amount(payment.amount(paymentRate))
+                .paymentRate(paymentRate)
+                .resetRate(resetRate)
+                .target(target)
+                .build();
     }
 }
