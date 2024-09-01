@@ -18,13 +18,15 @@ import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.params.provider.Arguments.arguments;
+import static org.lukario.model.TimeWindow.Window.MONTHLY;
+import static org.lukario.model.TimeWindow.Window.YEARLY;
 
 public class DtoTest {
     private static final ObjectMapper MAPPER = new ObjectMapper();
 
     public static Stream<Arguments> dtoProvider() {
         return Stream.of(
-                arguments("BucketDto.json", Bucket.createBucket("test bucket", TimeWindow.MONTHLY, 120., TimeWindow.YEARLY))
+                arguments("BucketDto.json", Bucket.createBucket("test bucket", TimeWindow.create(MONTHLY), 120., TimeWindow.create(YEARLY)))
         );
     }
 
@@ -35,6 +37,6 @@ public class DtoTest {
         JsonNode actualJson = MAPPER.valueToTree(dto);
         InputStream inputStream = new ClassPathResource(jsonFile).getInputStream();
         JsonNode expectedJson = MAPPER.readValue(inputStream, JsonNode.class);
-        assertEquals(actualJson, expectedJson);
+        assertEquals(expectedJson, actualJson);
     }
 }

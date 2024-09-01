@@ -1,7 +1,13 @@
 {
   "name": "test bucket",
   "amount": 10.0,
-  "paymentRate": "MONTHLY",
-  "resetRate": "YEARLY",
+  "paymentRate": {
+    "window" : "MONTHLY",
+    "frequency" : 1.0
+  },
+  "resetRate": {
+    "window" : "YEARLY",
+    "frequency" : 1.0
+  },
   "target": 120.0
 }

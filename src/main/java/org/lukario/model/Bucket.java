@@ -53,8 +53,8 @@ public class Bucket implements Model<BucketDto>{
         return BucketDto.builder()
                 .name(name)
                 .amount(payment.amount(paymentRate))
-                .paymentRate(paymentRate)
-                .resetRate(resetRate)
+                .paymentRate(paymentRate.toDto())
+                .resetRate(resetRate.toDto())
                 .target(target)
                 .build();
     }

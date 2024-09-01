@@ -15,8 +15,8 @@ import java.util.Arrays;
 public class BucketDto implements Dto{
     String name;
     Double amount;
-    TimeWindow paymentRate;
-    TimeWindow resetRate;
+    TimeWindowDto paymentRate;
+    TimeWindowDto resetRate;
     Double target;
 
     //TODO: hypermedia

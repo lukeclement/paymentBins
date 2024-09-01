@@ -3,14 +3,15 @@ package org.lukario.model;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.lukario.model.TimeWindow.Window.*;
 
 public class BucketTest {
     @Test
     void givenAnIncomeAndABucketIExpectFlowToBeDetermined() {
         //Given I have an income of 10 per month
-        Flow flow = TimeWindow.MONTHLY.flow(10.);
+        Flow flow = TimeWindow.create(MONTHLY).flow(10.);
         //And I have a bucket, target 120, to be paid in monthly, with a reset rate of 1 year
-        Bucket bucket = Bucket.createBucket("test", TimeWindow.MONTHLY, 120., TimeWindow.YEARLY);
+        Bucket bucket = Bucket.createBucket("test", TimeWindow.create(MONTHLY), 120., TimeWindow.create(YEARLY));
         //When I get the income after paying into the bucket
         Flow remainingFlow = bucket.getRemainingIncome(flow);
         //Then I expect a remaining income of zero
@@ -20,8 +21,8 @@ public class BucketTest {
     @Test
     void givenASetOfParametersIGetValidBuckets() throws TimeWindowException {
         //Given a set of 4 variables
-        TimeWindow paymentRate = TimeWindow.WEEKLY;
-        TimeWindow resetRate = TimeWindow.YEARLY;
+        TimeWindow paymentRate = TimeWindow.create(WEEKLY);
+        TimeWindow resetRate = TimeWindow.create(YEARLY);
         Double target = 520.;
         Double payments = 10.;
         String name = "test";

@@ -19,8 +19,8 @@ public class FlowTest {
     @Test
     void incomeIsIndependentOfTimeWindow() {
         //Given a yearly income of 120 and a monthly income of 10
-        Flow yearlyFlow = YEARLY.flow(120.0);
-        Flow monthlyFlow = MONTHLY.flow(10.0);
+        Flow yearlyFlow = yearly().flow(120.0);
+        Flow monthlyFlow = monthly().flow(10.0);
 
         //Then they are equivalent
         assertEquals(yearlyFlow, monthlyFlow);
@@ -29,26 +29,26 @@ public class FlowTest {
     @Test
     void incomeCanBeDerivedFromTimeWindow() {
         //Given a yearly income of 6
-        Flow yearlyFlow = YEARLY.flow(6.0);
+        Flow yearlyFlow = yearly().flow(6.0);
 
         //When I extract the monthly amount
-        Double monthlyIncome = yearlyFlow.amount(MONTHLY);
+        Double monthlyIncome = yearlyFlow.amount(monthly());
 
         //Then I expect a monthly amount of 0.5
         assertEquals(0.5, monthlyIncome);
     }
 
     static Stream<Arguments> incomeSumTestProvider() {
-        Flow five = YEARLY.flow(5.);
-        Flow ten = YEARLY.flow(10.);
+        Flow five = yearly().flow(5.);
+        Flow ten = yearly().flow(10.);
         return Stream.of(
-                arguments(new Flow[]{five, ten}, YEARLY.flow(15.)),
-                arguments(new Flow[]{five, MONTHLY.flow(1.)}, YEARLY.flow(17.)),
+                arguments(new Flow[]{five, ten}, yearly().flow(15.)),
+                arguments(new Flow[]{five, monthly().flow(1.)}, yearly().flow(17.)),
                 arguments(new Flow[]{five}, five),
-                arguments(new Flow[]{WEEKLY.flow(1.), ten}, YEARLY.flow(62.)),
-                arguments(new Flow[]{five, ten, five}, YEARLY.flow(20.)),
-                arguments(new Flow[]{five, YEARLY.flow(-5.)}, YEARLY.flow(0.)),
-                arguments(new Flow[]{five, YEARLY.flow(5.).negative()}, YEARLY.flow(0.))
+                arguments(new Flow[]{weekly().flow(1.), ten}, yearly().flow(62.)),
+                arguments(new Flow[]{five, ten, five}, yearly().flow(20.)),
+                arguments(new Flow[]{five, yearly().flow(-5.)}, yearly().flow(0.)),
+                arguments(new Flow[]{five, yearly().flow(5.).negative()}, yearly().flow(0.))
         );
     }
 
@@ -87,15 +87,15 @@ public class FlowTest {
         //Given a tax calculator
         DefaultTaxCalculator taxCalculator = TaxFactory.createDefaultTaxCalculator();
         //Given a yearly income
-        Flow flow = YEARLY.flow(incomePerYear);
+        Flow flow = yearly().flow(incomePerYear);
         //When I get my taxes
         Flow incomeTax = taxCalculator.getIncomeTax(flow);
         Flow nationalInsurance = taxCalculator.getNationalInsurance(flow);
         Flow totalTax = taxCalculator.getTax(flow);
         //Then I expect the correct amounts
-        assertFlowEquals(YEARLY.flow(expectedIncomeTax), incomeTax);
-        assertFlowEquals(YEARLY.flow(expectedNationalInsurance), nationalInsurance);
-        assertFlowEquals(YEARLY.flow(expectedNationalInsurance + expectedIncomeTax), totalTax);
+        assertFlowEquals(yearly().flow(expectedIncomeTax), incomeTax);
+        assertFlowEquals(yearly().flow(expectedNationalInsurance), nationalInsurance);
+        assertFlowEquals(yearly().flow(expectedNationalInsurance + expectedIncomeTax), totalTax);
     }
 
     public void assertFlowEquals(Flow a, Flow b) {
